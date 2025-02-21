@@ -1,0 +1,36 @@
+{% extends "blog/base.html" %}
+
+{% block body %}
+{{block.title}}{{posts.title}}{{endblock}}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2 p-3">
+                {% if post.image %}
+                    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid">
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <p></p>
+                <h1>{{ post.title }}</h1>
+                <small>{{user.username|title}}, published on {{ post.created_at }}</small>
+                <p></p>
+                <p>{{ post.content }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <a href="{% url 'home_page_posts' %}" class="btn btn-sm btn-outline-dark">Back</a>
+                        {% if user == post.author %}
+                        <a href="{% url 'update_post' post.id %}" class="btn btn-sm btn-outline-warning">Edit</a>
+                        <a href="{% url 'delete_post' post.id %}" class="btn btn-sm btn-outline-danger"
+                            onclick="return confirm('Are you sure?');">Delete</a>
+                        {% endif %}
+                    </div>
+                    <small class="text-muted">{{ post.created_at }}</small>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+{% endblock %}
